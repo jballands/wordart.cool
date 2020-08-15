@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Wordart from './Wordart';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [text, setText] = useState('wordart.cool');
+
+	return (
+		<div className="App">
+			<Wordart text={text} />
+			<input
+				type="text"
+				value={text}
+				onChange={(e) => setText(e.target.value)}
+			/>
+		</div>
+	);
 }
 
 export default App;
