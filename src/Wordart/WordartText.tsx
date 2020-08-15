@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useLoader, useUpdate } from 'react-three-fiber';
+import Gizmo from '../utils/Gizmo';
 
 interface WordartTextProps {
 	text: string;
@@ -35,43 +36,70 @@ function WordartText({ text }: WordartTextProps) {
 
 	// This code aligns the texts horizontally in space
 	const groupRef = useUpdate<THREE.Group>((group) => {
-		// We set up a Box3 to act as the bounding box and a Vector3 to hold the dimensions
-		const boundingBox = new THREE.Box3().setFromObject(group);
-		const size = new THREE.Vector3();
+		// // Now we can rotate the group
+		group.rotateY(Math.PI / 2);
+	}, []);
 
-		// size will now be a vector with size dimensions
+	useEffect(() => {
+		if (!groupRef.current) {
+			return;
+		}
+
+		const group = groupRef.current;
+
+		//  We set up a rotation matrix based on the group so that we can apply it the
+		// bounding box later...
+		const rotationMatrix = new THREE.Matrix4();
+		group.updateMatrix();
+		rotationMatrix.extractRotation(group.matrix);
+
+		// Apply the transform to the Box3
+		const boundingBox = new THREE.Box3()
+			.setFromObject(group)
+			.applyMatrix4(rotationMatrix);
+
+		// Now that our Box3 is correctly transformed, create our size vector
+		const size = new THREE.Vector3();
 		boundingBox.getSize(size);
+
+		console.dir(size);
 
 		// Objects/groups always rotate about their origin
 		// So we translate the meshes so that they are halfway left of their parent's origin
 		group.children.map((mesh) => {
 			mesh.translateX(-size.x / 2);
 			mesh.translateY(-size.y / 2);
+			mesh.translateZ(-size.z / 2);
 		});
 
-		// Now we can rotate the group
-		group.rotation.y = Math.PI / 2;
-	}, []);
+		return () => {
+			group.children.map((mesh) => {
+				mesh.translateX(size.x / 2);
+				mesh.translateY(size.y / 2);
+				mesh.translateZ(size.z / 2);
+			});
+		};
+	}, [groupRef, text]);
 
 	// This code spins the text in 3D space
 	useFrame(() => {
-		if (groupRef.current) {
-			const group = groupRef.current;
-			if (group.rotation.y > -Math.PI / 2) {
-				group.rotation.y -= 0.015;
-			} else {
-				group.rotation.y = Math.PI / 2;
-			}
+		if (!groupRef.current) {
+			return null;
+		}
+		const group = groupRef.current;
+		if (group.rotation.y > -Math.PI / 2) {
+			group.rotation.y -= 0.02;
+		} else {
+			group.rotation.y = Math.PI / 2;
 		}
 	});
 
 	return (
 		<>
-			<mesh>
-				<sphereBufferGeometry attach="geometry" args={[5, 32, 32]} />
-				<meshPhongMaterial color="aqua" attach="material" />
+			<mesh position={[0, 100, 0]}>
+				<sphereBufferGeometry attach="geometry" args={[32, 32, 32]} />
+				<meshPhongMaterial attach="material" color="cyan" />
 			</mesh>
-
 			<group ref={groupRef}>
 				<mesh>
 					<textBufferGeometry
@@ -87,6 +115,7 @@ function WordartText({ text }: WordartTextProps) {
 					/>
 					<meshNormalMaterial attach="material" />
 				</mesh>
+				<Gizmo />
 			</group>
 		</>
 	);
