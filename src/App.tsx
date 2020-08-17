@@ -10,7 +10,6 @@ const AppContainer = styled.div`
 `;
 
 const CoolControls = styled.div`
-	flex: 1 0 0;
 	margin: 25px 0;
 	display: flex;
 	align-items: center;
@@ -85,7 +84,7 @@ const CoolButton = styled.button`
 `;
 
 const WordartContainer = styled.div`
-	flex: 3 0 0;
+	flex: 1 0 0;
 	margin-bottom: 25px;
 `;
 
@@ -131,7 +130,7 @@ function App() {
 
 			{viewMode && (
 				<CoolButtonContainer>
-					<CoolButton onClick={() => setViewMode(false)}>
+					<CoolButton onClick={() => window.location.replace('/')}>
 						Make your own
 					</CoolButton>
 				</CoolButtonContainer>
