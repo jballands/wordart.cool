@@ -60,14 +60,14 @@ function WordartText({ text, onWidthChange }: WordartTextProps) {
 
 		// Objects/groups always rotate about their origin
 		// So we translate the meshes so that they are halfway left of their parent's origin
-		group.children.map((mesh) => {
+		group.children.forEach((mesh) => {
 			mesh.translateX(-size.x / 2);
 			mesh.translateY(-size.y / 3);
 			mesh.translateZ(-size.z / 2);
 		});
 
 		return () => {
-			group.children.map((mesh) => {
+			group.children.forEach((mesh) => {
 				mesh.translateX(size.x / 2);
 				mesh.translateY(size.y / 3);
 				mesh.translateZ(size.z / 2);

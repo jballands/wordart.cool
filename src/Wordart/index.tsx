@@ -9,10 +9,10 @@ interface WordartProps {
 
 function Wordart({ text }: WordartProps) {
 	const [cameraZ, setCameraZ] = useState(500);
-	const widthChanged = useCallback((width) => setCameraZ(width / 2 + 100), []);
+	const widthChanged = useCallback((width) => setCameraZ(width / 2 + 200), []);
 
 	return (
-		<Canvas style={{ height: '75vh' }}>
+		<Canvas style={{ width: '100%', height: '100%' }}>
 			<ambientLight />
 			<WordartCamera cameraZ={cameraZ} />
 			<Suspense fallback={null}>
