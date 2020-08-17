@@ -13,8 +13,6 @@ const GlobalStyles = createGlobalStyle`
 			sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		min-height: 100vh;
-		min-height: -webkit-fill-available;
 	}	  
 `;
 
