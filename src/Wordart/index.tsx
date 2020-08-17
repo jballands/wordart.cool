@@ -12,7 +12,7 @@ function Wordart({ text }: WordartProps) {
 	const widthChanged = useCallback((width) => setCameraZ(width / 2 + 200), []);
 
 	return (
-		<Canvas style={{ width: '100%', height: '100%' }}>
+		<Canvas style={{ width: '100%', height: '100%' }} camera={{ far: 5000 }}>
 			<ambientLight />
 			<WordartCamera cameraZ={cameraZ} />
 			<Suspense fallback={null}>

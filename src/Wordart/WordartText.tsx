@@ -14,7 +14,7 @@ function WordartText({ text, onWidthChange }: WordartTextProps) {
 		font,
 		size: 80,
 		height: 45,
-		curveSegments: 12,
+		curveSegments: 2,
 		bevelEnabled: true,
 		bevelThickness: 5,
 		bevelSize: 5,
@@ -26,12 +26,8 @@ function WordartText({ text, onWidthChange }: WordartTextProps) {
 		font,
 		size: 80,
 		height: 50,
-		curveSegments: 12,
-		bevelEnabled: true,
-		bevelThickness: 5,
-		bevelSize: 2,
-		bevelOffset: 0,
-		bevelSegments: 5,
+		curveSegments: 2,
+		bevelEnabled: false,
 	};
 
 	// This code aligns the texts horizontally in space
@@ -98,7 +94,7 @@ function WordartText({ text, onWidthChange }: WordartTextProps) {
 					/>
 					<meshStandardMaterial attach="material" color="white" />
 				</mesh>
-				<mesh>
+				<mesh position={[0, 0, 5]}>
 					<textBufferGeometry
 						attach="geometry"
 						args={[text, innerFontConfig]}
