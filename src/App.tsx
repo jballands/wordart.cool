@@ -19,7 +19,6 @@ const CoolControls = styled.div`
 `;
 
 const CoolText = styled.div`
-	margin: 15px 0;
 	color: white;
 	font-style: italic;
 	font-weight: 800;
@@ -53,6 +52,14 @@ const CoolInput = styled.input`
 		font-size: 36px;
 		width: 550px;
 	}
+`;
+
+const CoolSubText = styled.div`
+	margin: 15px 0;
+	color: white;
+	font-weight: 600;
+	text-align: center;
+	font-size: 18px;
 `;
 
 const CoolButtonContainer = styled.div`
@@ -113,6 +120,7 @@ function App() {
 			{!viewMode && (
 				<CoolControls>
 					<CoolText>Type something sick.</CoolText>
+					<CoolSubText>Just copy the URL to share!</CoolSubText>
 					<CoolInput type="text" value={text} onChange={textChanged} />
 				</CoolControls>
 			)}
